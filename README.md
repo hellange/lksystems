@@ -1,6 +1,6 @@
 ## About
 
-Experimental code to learn more about node and typescript and cloud deployment using docker-compose
+Experimental code to learn more about node, express, rest, typescript based projects and cloud deployment using docker-compose.
 
 ## LK Systems
 
@@ -14,7 +14,7 @@ More or less completely rewritten after that.
 
 After that, after you do changes in the code:
 
-2. Compile (and assets)- `npm run build`
+2. Compile (and assets) - `npm run build`
 3. Run the app + database - `LK_URL=http://<yourid>.lkics.net:<yourport> LK_USERNAME=lk LK_PASSWORD=DTyqD7K4 docker-compose up`. Use the username and password for your lk-systems webserver.
 
 ## Docker deploy
