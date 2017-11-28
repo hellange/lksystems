@@ -1,0 +1,24 @@
+# create a docker-compose.yml file
+version: "2"
+services:
+  web:
+    build: .
+    #image: lk:latest
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    links:
+      - db:db
+    environment:
+      - LK_USERNAME=${LK_USERNAME}
+      - LK_PASSWORD=${LK_PASSWORD}
+
+  db:
+      image: mysql
+      container_name: test-mysql
+      ports:
+        - "3306:3306"
+      environment:
+        - MYSQL_ROOT_PASSWORD=secret2
+        - MYSQL_DATABASE=helge
