@@ -11,6 +11,7 @@ let connection;
 let lk_username;
 let lk_password;
 let auth;
+let lk_url;
 
 // TODO: Replace with environment variables
 
@@ -27,6 +28,8 @@ export class Thermostats {
         lk_username = process.env.LK_USERNAME;
         lk_password = process.env.LK_PASSWORD;
         auth = "Basic " + new Buffer(lk_username + ":" + lk_password).toString("base64");
+        lk_url = process.env.LK_URL;
+
         //console.log("lk username:", lk_username);
         //console.log("lk password:", lk_password);
 
@@ -151,7 +154,7 @@ export class Thermostats {
 
     public getThermostatInfo(i) {
 
-        let urlBase = "http://de1102.lkics.net:8088/thermostat.json?tid=";
+        let urlBase = lk_url + "/thermostat.json?tid=";
         let res = <any>{};
         let url = urlBase + i;
         console.log("Requesting thermostat info:", url);

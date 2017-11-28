@@ -11,6 +11,7 @@ services:
     links:
       - db:db
     environment:
+      - LK_URL=${LK_URL}
       - LK_USERNAME=${LK_USERNAME}
       - LK_PASSWORD=${LK_PASSWORD}
 
