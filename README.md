@@ -7,9 +7,7 @@ Experimental code to learn more about node, express, rest, typescript based proj
 Reads temperature and system settings from LK Systems Webserver.
 Stores result periodically in a database.
 
-
-More or less completely rewritten after that.
-
+## Build and run
 1. Install dependencies - `npm install`
 
 After that, after you do changes in the code:
