@@ -7,13 +7,16 @@ Experimental code to learn more about node, express, rest, typescript based proj
 Reads temperature and system settings from LK Systems Webserver.
 Stores result periodically in a database.
 
+## Preconditions
+Add your lk system credentials in a lk_credentials.env file
+
 ## Build and run
 1. Install dependencies - `npm install`
 
 After that, after you do changes in the code:
 
 2. Compile (and assets) - `npm run build`
-3. Run the app + database - `LK_URL=http://<yourid>.lkics.net:<yourport> LK_USERNAME=lk LK_PASSWORD=DTyqD7K4 docker-compose up`. Use the username and password for your lk-systems webserver.
+3. Run the app + database - `docker-compose up`. It uses the lk system credentials from a environment file.
 
 ## Docker deploy
 docker / docker-compose

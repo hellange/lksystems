@@ -2,7 +2,6 @@ import { Router, Request, Response, NextFunction } from 'express';
 
 var request = require('request-promise');
 
-const Heroes = require('../data');
 const mysql = require('promise-mysql');
 
 let thermostats = [];
@@ -29,14 +28,15 @@ export class Thermostats {
         lk_password = process.env.LK_PASSWORD;
         auth = "Basic " + new Buffer(lk_username + ":" + lk_password).toString("base64");
         lk_url = process.env.LK_URL;
-
-        //console.log("lk username:", lk_username);
-        //console.log("lk password:", lk_password);
+console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        console.log("lk username:", lk_username);
+        console.log("lk password:", lk_password);
+	console.log("url:", lk_url);
 
         this.createConnection();
         console.log("Connected, initiate periodic polling");
         setTimeout( () => this.collectAllThermostats(), 1000); // needed for LK webserver to be ready
-        setInterval( () => this.collectAllThermostats(), 30000);
+        setInterval( () => this.collectAllThermostats(), 1000 *60 *60);
         //connection.end();
     }
 

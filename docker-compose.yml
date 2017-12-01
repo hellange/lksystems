@@ -1,5 +1,5 @@
 # create a docker-compose.yml file
-version: "2"
+version: "3"
 services:
   web:
     build: .
@@ -10,10 +10,12 @@ services:
       - "3000:3000"
     links:
       - db:db
-    environment:
-      - LK_URL=${LK_URL}
-      - LK_USERNAME=${LK_USERNAME}
-      - LK_PASSWORD=${LK_PASSWORD}
+    env_file:
+      - lk_credentials.env
+#    environment:
+#      - LK_URL=$a${LK_URL}
+#      - LK_USERNAME=$${LK_USERNAME}
+#      - LK_PASSWORD=$${LK_PASSWORD}
 
   db:
       image: mysql
@@ -23,3 +25,4 @@ services:
       environment:
         - MYSQL_ROOT_PASSWORD=secret2
         - MYSQL_DATABASE=helge
+
