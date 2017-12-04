@@ -28,7 +28,7 @@ export class Thermostats {
         lk_password = process.env.LK_PASSWORD;
         auth = "Basic " + new Buffer(lk_username + ":" + lk_password).toString("base64");
         lk_url = process.env.LK_URL;
-console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+console.log("YYYYYYYYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         console.log("lk username:", lk_username);
         console.log("lk password:", lk_password);
 	console.log("url:", lk_url);
@@ -75,7 +75,7 @@ console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     }
 
     private async getDataFromDb(c) {
-        return await c.query('SELECT * from samples').then ((rows) => {
+        return await c.query('SELECT * from samples order by creation_time desc').then ((rows) => {
 
             let thermostats = [];
             rows.forEach((r,i) => {
