@@ -4,6 +4,8 @@ import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 
 import Thermostats from './routes/Thermostats';
+import Hello from './routes/Hello';
+import * as pug from 'pug';
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -16,6 +18,8 @@ class App {
     this.express = express();
     this.middleware();
     this.routes();
+    this.express.set('view engine', 'pug');
+
   }
 
   // Configure Express middleware.
@@ -31,14 +35,10 @@ class App {
      * working so far. This function will change when we start to add more
      * API endpoints */
     let router = express.Router();
-    // placeholder route handler
-    router.get('/', (req, res, next) => {
-      res.json({
-        message: 'Hello World!'
-      });
-    });
-    this.express.use('/', router);
+
+    this.express.use('/', Hello);
     this.express.use('/api/v1/thermostats', Thermostats);
+
   }
 
 }

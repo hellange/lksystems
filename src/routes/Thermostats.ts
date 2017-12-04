@@ -12,8 +12,6 @@ let lk_password;
 let auth;
 let lk_url;
 
-// TODO: Replace with environment variables
-
 export class Thermostats {
     router: Router
 
@@ -28,10 +26,8 @@ export class Thermostats {
         lk_password = process.env.LK_PASSWORD;
         auth = "Basic " + new Buffer(lk_username + ":" + lk_password).toString("base64");
         lk_url = process.env.LK_URL;
-console.log("YYYYYYYYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        console.log("lk username:", lk_username);
-        console.log("lk password:", lk_password);
-	console.log("url:", lk_url);
+        //console.log("lk username:", lk_username);
+        //console.log("lk password:", lk_password);
 
         this.createConnection();
         console.log("Connected, initiate periodic polling");
@@ -229,7 +225,6 @@ console.log("YYYYYYYYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
 }
 
-// Create the router, and export its configured Express.Router
 const thermostatRoutes = new Thermostats();
 
 export default thermostatRoutes.router;
