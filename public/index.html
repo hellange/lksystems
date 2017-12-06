@@ -28,10 +28,12 @@
 
                 var heating =
                   parseInt(value.thermostats[0].heatingStatus);
-                  +parseInt(value.thermostats[1].heatingStatus);
-                  +parseInt(value.thermostats[2].heatingStatus);
-                  +parseInt(value.thermostats[3].heatingStatus);
-                  +parseInt(value.thermostats[4].heatingStatus);
+                  + parseInt(value.thermostats[1].heatingStatus);
+                  + parseInt(value.thermostats[2].heatingStatus);
+                  + parseInt(value.thermostats[3].heatingStatus);
+                  + parseInt(value.thermostats[4].heatingStatus);
+
+                console.log("Combined heating", heating);
 
                 dataPoints_heating.push({x: new Date(value.creation_time), y: heating});
 
