@@ -39,7 +39,9 @@ export class Thermostats {
     private collectAllThermostats() {
         console.log("Start requesting LK for thermostat info...");
         this.collectThermostatData(thermostats, connection).then((res) => {
-            console.log("Thermostat data collection done!", res);
+            //console.log("Thermostat data collection done!", res);
+            console.log("Thermostat data collection done!");
+
             thermostats = res;
 
             //TODO: Get rid of global variables !
@@ -220,8 +222,6 @@ export class Thermostats {
         this.router.get('/',  async (req: Request, res: Response, next: NextFunction) => {
             res.send(await this.getDataFromDb(connection));
         });
-
-        //this.router.get('/:id', this.getOne);
     }
 
 

@@ -14,8 +14,20 @@
 
             var dataPoints_heating = [];
 
+            var thermostatData;
+
             $.getJSON("/api/v1/thermostats", function(data) {
               console.log("Got json data:", data)
+              thermostatData = data;
+              $('#bad').text(data.thermostats[0].thermostats[0].actualRoomTemp);
+              $('#bad')
+
+              $('#stue').text(data.thermostats[0].thermostats[1].actualRoomTemp);
+              $('#gang').text(data.thermostats[0].thermostats[2].actualRoomTemp);
+              $('#soverom').text(data.thermostats[0].thermostats[3].actualRoomTemp);
+              $('#gjesterom').text(data.thermostats[0].thermostats[4].actualRoomTemp);
+
+
               $.each(data.thermostats, function(key, value){
                 console.log("value.creation_time", new Date(value));
 
@@ -40,7 +52,7 @@
               });
               var chart = new CanvasJS.Chart("chartContainer",{
                 title:{
-                  text:"Temperaturer siste tiden"
+                  text:"Trend"
                 },
                 zoomEnabled: true,
                 zoomType: "xy",
@@ -94,6 +106,18 @@
 
 </head>
 <body>
+
+<div style="padding-left:5%; width: 95%;">
+        <h2>
+        Bad: <span id="bad"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+        Stue: <span id="stue"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+        Gang: <span id="gang"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+        Soverom: <span id="soverom"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+        Gjesterom: <span id="gjesterom"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </h2>
+</div>
+
+
 <div id="chartContainer" style="height: 300px; padding-left:2%; width: 95%;"></div>
 </body>
 </html>
