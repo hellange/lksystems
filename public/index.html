@@ -12,6 +12,8 @@
             var dataPoints_soverom = [];
             var dataPoints_gjesterom = [];
 
+            var dataPoints_heating = [];
+
             $.getJSON("/api/v1/thermostats", function(data) {
               console.log("Got json data:", data)
               $.each(data.thermostats, function(key, value){
@@ -23,6 +25,16 @@
                 dataPoints_gang.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[2].actualRoomTemp)});
                 dataPoints_soverom.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[3].actualRoomTemp)});
                 dataPoints_gjesterom.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[4].actualRoomTemp)});
+
+                value.thermostats[1].heatingStatus = "2";
+                var heating = 1+
+                  parseInt(value.thermostats[0].heatingStatus);
+                  +parseInt(value.thermostats[1].heatingStatus);
+                  +parseInt(value.thermostats[2].heatingStatus);
+                  +parseInt(value.thermostats[3].heatingStatus);
+                  +parseInt(value.thermostats[4].heatingStatus);
+
+                dataPoints_heating.push({x: new Date(value.creation_time), y: heating});
 
               });
               var chart = new CanvasJS.Chart("chartContainer",{
@@ -66,7 +78,12 @@
                     legendText: "Gjesterom",
                     showInLegend: true,
                     dataPoints : dataPoints_gjesterom,
-                  },
+                  },{
+                    type: "line",
+                    legendText: "Heating",
+                    showInLegend: true,
+                    dataPoints : dataPoints_heating,
+                  }
                 ]
               });
               chart.render();
