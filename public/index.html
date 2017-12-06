@@ -18,11 +18,11 @@
                 console.log("value.creation_time", new Date(value));
 
 
-                dataPoints_bad.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[0].actualRoomTemp)});
-                dataPoints_stue.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[1].actualRoomTemp)});
-                dataPoints_gang.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[2].actualRoomTemp)});
-                dataPoints_soverom.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[3].actualRoomTemp)});
-                dataPoints_gjesterom.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[4].actualRoomTemp)});
+                dataPoints_bad.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[0].actualRoomTemp)});
+                dataPoints_stue.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[1].actualRoomTemp)});
+                dataPoints_gang.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[2].actualRoomTemp)});
+                dataPoints_soverom.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[3].actualRoomTemp)});
+                dataPoints_gjesterom.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[4].actualRoomTemp)});
 
               });
               var chart = new CanvasJS.Chart("chartContainer",{
@@ -31,6 +31,13 @@
                 },
                 zoomEnabled: true,
                 zoomType: "xy",
+                axisX:{
+                  //title: 'Dato / Tid (UTC)'
+                },
+                axisY:{
+                  title: 'Temperatur (C)',
+                  valueFormatString: '##.#',
+                },
                 data: [
                   {
 
