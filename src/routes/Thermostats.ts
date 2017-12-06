@@ -112,16 +112,18 @@ export class Thermostats {
 
         console.log("Leaving async storeDataToDb...")
 
-        return c.query("INSERT INTO samples (thermostats) VALUES ?", [values], function (err, result) {
-            if (!err) {
-                console.log('Result after storing thermostat sample', result);
-            }
-            else {
-                console.log('Error when storing thermostat sample', err);
-            }
-            console.log("storeDataToDb result ready");
-            return result;
-        });
+        // Implementing poor mans fifo by removing entries older that x days...
+        return c.query("DELETE FROM samples WHERE creation_time < NOW() - INTERVAL 100 DAY")
+            .then( (result) => {
+                console.log("# rows removed:", result.affectedRows);
+            })
+            .then((result) => {
+                c.query("INSERT INTO samples (thermostats) VALUES ?", [values])
+                    .then( (result) => {
+                        console.log("storeDataToDb result ready");
+                        return result;
+                    });
+            });
     }
 
     private collectThermostatData(res, connection) {
