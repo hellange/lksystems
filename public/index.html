@@ -1,0 +1,74 @@
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+        <script type="text/javascript">
+          window.onload = function () {
+            var dataPoints_bad = [];
+            var dataPoints_stue = [];
+            var dataPoints_gang = [];
+            var dataPoints_soverom = [];
+            var dataPoints_gjesterom = [];
+
+            $.getJSON("/api/v1/thermostats", function(data) {
+              console.log("Got json data:", data)
+              $.each(data.thermostats, function(key, value){
+                console.log("value.creation_time", new Date(value));
+
+
+                dataPoints_bad.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[0].actualRoomTemp)});
+                dataPoints_stue.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[1].actualRoomTemp)});
+                dataPoints_gang.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[2].actualRoomTemp)});
+                dataPoints_soverom.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[3].actualRoomTemp)});
+                dataPoints_gjesterom.push({x: new Date(value.creation_time), y: parseInt(value.thermostats[4].actualRoomTemp)});
+
+              });
+              var chart = new CanvasJS.Chart("chartContainer",{
+                title:{
+                  text:"Temperaturer siste tiden"
+                },
+                zoomEnabled: true,
+                zoomType: "xy",
+                data: [
+                  {
+
+                  type: "line",
+                    legendText: "Bad",
+                    showInLegend: true,
+                  dataPoints : dataPoints_bad,
+                },
+                  {
+                    type: "line",
+                    legendText: "Stue",
+                    showInLegend: true,
+                    dataPoints : dataPoints_stue,
+                  }, {
+                    type: "line",
+                    legendText: "Gang",
+                    showInLegend: true,
+                    dataPoints : dataPoints_gang,
+                  }, {
+                    type: "line",
+                    legendText: "Soverom",
+                    showInLegend: true,
+                    dataPoints : dataPoints_soverom,
+                  }, {
+                    type: "line",
+                    legendText: "Gjesterom",
+                    showInLegend: true,
+                    dataPoints : dataPoints_gjesterom,
+                  },
+                ]
+              });
+              chart.render();
+            });
+          }
+        </script>
+
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; padding-left:2%; width: 95%;"></div>
+</body>
+</html>
