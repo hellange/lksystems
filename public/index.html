@@ -26,8 +26,7 @@
                 dataPoints_soverom.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[3].actualRoomTemp)});
                 dataPoints_gjesterom.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[4].actualRoomTemp)});
 
-                value.thermostats[1].heatingStatus = "2";
-                var heating = 1+
+                var heating =
                   parseInt(value.thermostats[0].heatingStatus);
                   +parseInt(value.thermostats[1].heatingStatus);
                   +parseInt(value.thermostats[2].heatingStatus);
