@@ -72,8 +72,14 @@ export class Thermostats {
 
     }
 
-    private async getDataFromDb(c) {
-        return await c.query('SELECT * from samples order by creation_time desc').then ((rows) => {
+    private async getDataFromDb(c, days) {
+        var q = 'SELECT * from samples ';
+        if (days > 0) {
+           q += 'WHERE creation_time > NOW() - INTERVAL ' + days + ' DAY';
+        }
+        q += ' order by creation_time desc';
+        console.log("getData query:", q);
+        return await c.query(q).then ((rows) => {
 
             let thermostats = [];
             rows.forEach((r,i) => {
@@ -220,7 +226,10 @@ export class Thermostats {
     init() {
 
         this.router.get('/',  async (req: Request, res: Response, next: NextFunction) => {
-            res.send(await this.getDataFromDb(connection));
+            console.log(" - - - query params", req.query);
+            let days = req.query.days;
+            console.log(" - - - days", days);
+            res.send(await this.getDataFromDb(connection, days));
         });
     }
 

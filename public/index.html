@@ -14,19 +14,30 @@
 
           var dataPoints_heating = [];
 
-          var thermostatData;
-
           var chart;
 
           window.onload = function () {
             chart = createChart();
-            fillInData();
+            fillInData(7);
           }
 
-          function fillInData() {
-            $.getJSON("/api/v1/thermostats", function(data) {
+          function fillInData(days) {
+
+            dataPoints_bad.length = 0;
+            dataPoints_stue.length = 0;
+            dataPoints_gang.length = 0;
+            dataPoints_soverom.length = 0;
+            dataPoints_gjesterom.length = 0;
+            dataPoints_heating.length = 0;
+
+            console.log("Fill in data for #days=", days);
+            var r = "/api/v1/thermostats";
+            if (days>0) {
+              r += "?days="+days;
+            }
+            $.getJSON(r, function(data) {
               console.log("Got json data:", data)
-              thermostatData = data;
+              var thermostatData = data;
               $('#bad').text(data.thermostats[0].thermostats[0].actualRoomTemp);
               $('#bad')
 
@@ -37,7 +48,6 @@
 
 
               $.each(data.thermostats, function(key, value){
-                console.log("value.creation_time", new Date(value));
 
                 dataPoints_bad.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[0].actualRoomTemp)});
                 dataPoints_stue.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[1].actualRoomTemp)});
@@ -52,7 +62,7 @@
                   + parseInt(value.thermostats[3].heatingStatus)
                   + parseInt(value.thermostats[4].heatingStatus);
 
-                console.log("Combined heating", heating);
+                //console.log("Combined heating", heating);
 
                 dataPoints_heating.push({x: new Date(value.creation_time), y: heating});
 
@@ -114,9 +124,9 @@
             return chart;
           }
 
-          function refresh() {
+          function refresh(days) {
             console.log("REFRESH");
-            fillInData(chart);
+            fillInData(days);
 
           }
         </script>
@@ -143,7 +153,16 @@
                 <tr>
 
                 <tr>
-                <td><a href="javascript:refresh()">refresh</a></td>
+                <td>
+                        <select onchange="javascript:refresh(this.value)">
+                                <option value="1">Last 24 hours</option>
+                                <option value="7" selected="selected">Last 7 days</option>
+                                <option value="28">Last 4 weeks</option>
+                                <option value="90">Last 3 months</option>
+                        </select>
+                </td>
+
+
         </tr>
 
         </table>
