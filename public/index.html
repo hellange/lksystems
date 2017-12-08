@@ -5,17 +5,25 @@
 <html>
 <head>
         <script type="text/javascript">
+
+          var dataPoints_bad = [];
+          var dataPoints_stue = [];
+          var dataPoints_gang = [];
+          var dataPoints_soverom = [];
+          var dataPoints_gjesterom = [];
+
+          var dataPoints_heating = [];
+
+          var thermostatData;
+
+          var chart;
+
           window.onload = function () {
-            var dataPoints_bad = [];
-            var dataPoints_stue = [];
-            var dataPoints_gang = [];
-            var dataPoints_soverom = [];
-            var dataPoints_gjesterom = [];
+            chart = createChart();
+            fillInData();
+          }
 
-            var dataPoints_heating = [];
-
-            var thermostatData;
-
+          function fillInData() {
             $.getJSON("/api/v1/thermostats", function(data) {
               console.log("Got json data:", data)
               thermostatData = data;
@@ -30,7 +38,6 @@
 
               $.each(data.thermostats, function(key, value){
                 console.log("value.creation_time", new Date(value));
-
 
                 dataPoints_bad.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[0].actualRoomTemp)});
                 dataPoints_stue.push({x: new Date(value.creation_time), y: parseFloat(value.thermostats[1].actualRoomTemp)});
@@ -50,57 +57,67 @@
                 dataPoints_heating.push({x: new Date(value.creation_time), y: heating});
 
               });
-              var chart = new CanvasJS.Chart("chartContainer",{
-                title:{
-                  //text:"Trend"
-                },
-                zoomEnabled: true,
-                zoomType: "xy",
-                axisX:{
-                  //title: 'Dato / Tid (UTC)'
-                },
-                axisY:{
-                  title: 'Temperatur (C)',
-                  valueFormatString: '##.#',
-                },
-                data: [
-                  {
 
-                  type: "line",
-                    legendText: "Bad",
-                    showInLegend: true,
-                  dataPoints : dataPoints_bad,
-                },
-                  {
-                    type: "line",
-                    legendText: "Stue",
-                    showInLegend: true,
-                    dataPoints : dataPoints_stue,
-                  }, {
-                    type: "line",
-                    legendText: "Gang",
-                    showInLegend: true,
-                    dataPoints : dataPoints_gang,
-                  }, {
-                    type: "line",
-                    legendText: "Soverom",
-                    showInLegend: true,
-                    dataPoints : dataPoints_soverom,
-                  }, {
-                    type: "line",
-                    legendText: "Gjesterom",
-                    showInLegend: true,
-                    dataPoints : dataPoints_gjesterom,
-                  },{
-                    type: "line",
-                    legendText: "Heating",
-                    showInLegend: true,
-                    dataPoints : dataPoints_heating,
-                  }
-                ]
-              });
               chart.render();
             });
+          }
+
+          function createChart() {
+            var chart = new CanvasJS.Chart("chartContainer",{
+              title:{
+                //text:"Trend"
+              },
+              zoomEnabled: true,
+              zoomType: "xy",
+              axisX:{
+                //title: 'Dato / Tid (UTC)'
+              },
+              axisY:{
+                title: 'Temperatur (C)',
+                valueFormatString: '##.#',
+              },
+              data: [
+                {
+                  type: "line",
+                  legendText: "Bad",
+                  showInLegend: true,
+                  dataPoints : dataPoints_bad,
+                },
+                {
+                  type: "line",
+                  legendText: "Stue",
+                  showInLegend: true,
+                  dataPoints : dataPoints_stue,
+                }, {
+                  type: "line",
+                  legendText: "Gang",
+                  showInLegend: true,
+                  dataPoints : dataPoints_gang,
+                }, {
+                  type: "line",
+                  legendText: "Soverom",
+                  showInLegend: true,
+                  dataPoints : dataPoints_soverom,
+                }, {
+                  type: "line",
+                  legendText: "Gjesterom",
+                  showInLegend: true,
+                  dataPoints : dataPoints_gjesterom,
+                },{
+                  type: "line",
+                  legendText: "Heating",
+                  showInLegend: true,
+                  dataPoints : dataPoints_heating,
+                }
+              ]
+            });
+            return chart;
+          }
+
+          function refresh() {
+            console.log("REFRESH");
+            fillInData(chart);
+
           }
         </script>
 
@@ -109,21 +126,25 @@
 
 <div style="padding-left:10%; width: 95%;">
         <table width=100%>
-               <tr>
-                    <td>Bad</td>
-                       <td>Stue</td>
-                       <td>Gang</td>
-                       <td>Soverom</td>
-                       <td>Gjesterom</td>
-               </tr>
+                <tr>
+                        <td>Bad</td>
+                        <td>Stue</td>
+                        <td>Gang</td>
+                        <td>Soverom</td>
+                        <td>Gjesterom</td>
+                </tr>
                 <tr>
                         <td style="width:20%"><h2><span id="bad"/></h2></td>
-                <td style="width:20%"><h2><span id="stue"/></h2></td>
-                <td style="width:20%"><h2><span id="gang"/></h2></td>
-                <td style="width:20%"><h2><span id="soverom"/></h2></td>
-                <td style="width:20%"><h2><span id="gjesterom"/></h2></td>
+                        <td style="width:20%"><h2><span id="stue"/></h2></td>
+                        <td style="width:20%"><h2><span id="gang"/></h2></td>
+                        <td style="width:20%"><h2><span id="soverom"/></h2></td>
+                        <td style="width:20%"><h2><span id="gjesterom"/></h2></td>
 
                 <tr>
+
+                <tr>
+                <td><a href="javascript:refresh()">refresh</a></td>
+        </tr>
 
         </table>
 
