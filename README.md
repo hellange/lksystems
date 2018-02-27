@@ -23,7 +23,7 @@ docker / docker-compose
 
 
 ## Url
-Service should now be available on - `http://localhost:3000/api/v1/thermostats`
+Service should now be available on - `http://localhost:3000/api/v1/thermostats` and `http://localhost:3000/static/`
 
 ## References
 
