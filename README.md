@@ -1,8 +1,7 @@
 
 # OBSOLETE:
 This code worked for the older LKSystems webserver. This does not work for the newer LKSystems webserver and cloud solution.
-Refer to lksystems-cloud repo instead.
-
+Refer to [lksystems-cloud](https://github.com/hellange/lksystems-cloud) instead.
 
 ## About
 
