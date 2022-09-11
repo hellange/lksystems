@@ -1,3 +1,9 @@
+
+# OBSOLETE:
+This code worked for the older LKSystems webserver. This does not work for the newer LKSystems webserver and cloud solution.
+Refer to lksystems-cloud repo instead.
+
+
 ## About
 
 Experimental code to learn more about node, express, rest, typescript based projects and cloud deployment using docker-compose.
